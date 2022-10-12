@@ -1,3 +1,4 @@
+from cProfile import label
 import pandas as pd
 import matplotlib.pyplot as plt
 from numpy import percentile
@@ -8,7 +9,7 @@ import matplotlib.dates as mdates
 import operator
 
 
-def plot_data(data_df, temperature=False, CO2=False, PIR=False, light=False):
+def plot_data(data_df, temperature=False, CO2=False, PIR=False, light=False, PIR_Join = False, Temp_join=False, MeanLight=False, persons=False):
     """
     Plot the temperature data from the dataframe
     :param df: dataframe
@@ -17,18 +18,32 @@ def plot_data(data_df, temperature=False, CO2=False, PIR=False, light=False):
     :return: None
     """
     if temperature:
-        data_df.plot(x='DateTime', y='S1Temp', figsize=(20, 10), title='Temperature from sensor 1', color='red')
-        data_df.plot(x='DateTime', y='S2Temp', figsize=(20, 10), title='Temperature from sensor 2', color='blue')
-        data_df.plot(x='DateTime', y='S3Temp', figsize=(20, 10), title='Temperature from sensor 3', color='green')
+        if Temp_join:
+            data_df.plot(x='DateTime', y=['S1Temp','S2Temp','S3Temp','MeanTemp'], figsize=(20, 10), title='Temperature')
+        else:
+            data_df.plot(x='DateTime', y=['S1Temp','S2Temp','S3Temp'], figsize=(20, 10), title='Temperature')
+        #data_df.plot(x='DateTime', y='S2Temp', figsize=(20, 10), label='Temperature from sensor 2', color='blue')
+        #data_df.plot(x='DateTime', y='S3Temp', figsize=(20, 10), label='Temperature from sensor 3', color='green')
+        #data_df.legend()
+        #data_df.show()
     if CO2:
-        data_df.plot(x='DateTime', y='CO2', figsize=(20, 10), title='CO2 from sensor 1', color='red')
+        data_df.plot(x='DateTime', y='CO2', figsize=(20, 10), title='CO2 Sensor', color='red')
     if PIR:
-        data_df.plot(x='DateTime', y='PIR1', figsize=(20, 10), title='IR motion from sensor 1', color='red')
-        data_df.plot(x='DateTime', y='PIR2', figsize=(20, 10), title='IR motion from sensor 2', color='blue')
+        data_df.plot(x='DateTime', y=['PIR1','PIR2'], figsize=(20, 10), title='PIR Sensor')
+        #data_df.plot(x='DateTime', y='PIR2', figsize=(20, 10), title='IR motion from sensor 2', color='blue')
+    if PIR_Join:
+        data_df.plot(x='DateTime', y='PIR', figsize=(20, 10), title='PIR Sensor', color='red')
     if light:
-        data_df.plot(x='DateTime', y='S1Light', figsize=(20, 10), title='Light from sensor 1', color='red')
-        data_df.plot(x='DateTime', y='S2Light', figsize=(20, 10), title='Light from sensor 2', color='blue')
-        data_df.plot(x='DateTime', y='S3Light', figsize=(20, 10), title='Light from sensor 3', color='green')
+        if MeanLight:
+            data_df.plot(x='DateTime', y=['S1Light','S2Light','S3Light','MeanLight'], figsize=(20, 10), title='Light')
+        else:
+            data_df.plot(x='DateTime', y=['S1Light','S2Light','S3Light'], figsize=(20, 10), title='Light')
+    if persons:
+        data_df.plot(x='DateTime', y='Persons', figsize=(20, 10), title='Persons', color='red')
+        #data_df.plot(x='DateTime', y='S2Light', figsize=(20, 10), title='Light from sensor 2', color='blue')
+        #data_df.plot(x='DateTime', y='S3Light', figsize=(20, 10), title='Light from sensor 3', color='green')
+    #if Temp_join:
+    #    data_df.plot(x='DateTime', y='MeanTemp', figsize=(20, 10), title='Temperature', color='red')
 
 
 
