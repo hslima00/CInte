@@ -19,9 +19,10 @@ def plot_data(data_df, temperature=False, CO2=False, PIR=False, light=False, PIR
     """
     if temperature:
         if Temp_join:
-            data_df.plot(x='DateTime', y=['S1Temp','S2Temp','S3Temp','MeanTemp'], figsize=(20, 10), title='Temperature')
+            data_df.plot(x='DateTime', y=['MeanTemp'], figsize=(20, 10), title='Temperature')
         else:
-            data_df.plot(x='DateTime', y=['S1Temp','S2Temp','S3Temp'], figsize=(20, 10), title='Temperature')
+            pass
+            #data_df.plot(x='DateTime', y=['S1Temp','S2Temp','S3Temp'], figsize=(20, 10), title='Temperature')
         #data_df.plot(x='DateTime', y='S2Temp', figsize=(20, 10), label='Temperature from sensor 2', color='blue')
         #data_df.plot(x='DateTime', y='S3Temp', figsize=(20, 10), label='Temperature from sensor 3', color='green')
         #data_df.legend()
@@ -35,9 +36,10 @@ def plot_data(data_df, temperature=False, CO2=False, PIR=False, light=False, PIR
         data_df.plot(x='DateTime', y='PIR', figsize=(20, 10), title='PIR Sensor', color='red')
     if light:
         if MeanLight:
-            data_df.plot(x='DateTime', y=['S1Light','S2Light','S3Light','MeanLight'], figsize=(20, 10), title='Light')
+            data_df.plot(x='DateTime', y=['MeanLight'], figsize=(20, 10), title='Light')
         else:
-            data_df.plot(x='DateTime', y=['S1Light','S2Light','S3Light'], figsize=(20, 10), title='Light')
+            pass
+            #data_df.plot(x='DateTime', y=['S1Light','S2Light','S3Light'], figsize=(20, 10), title='Light')
     if persons:
         data_df.plot(x='DateTime', y='Persons', figsize=(20, 10), title='Persons', color='red')
         #data_df.plot(x='DateTime', y='S2Light', figsize=(20, 10), title='Light from sensor 2', color='blue')
