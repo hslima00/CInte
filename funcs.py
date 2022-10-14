@@ -19,24 +19,78 @@ def plot_data(data_df, temperature=False, CO2=False, PIR=False, light=False, PIR
     """
     if temperature:
         if Temp_join:
-            data_df.plot(x='DateTime', y=['MeanTemp'], figsize=(20, 10), title='Temperature')
+            # plot MeanTemp and Persons with 2 y axis and DateTime as x axis
+            fig, ax1 = plt.subplots(figsize=(20, 10))
+            ax1.plot(data_df.index.values, data_df['MeanTemp'], color='r', marker='.', label='MeanTemp')
+            ax1.set_xlabel('DateTime')
+            ax1.set_ylabel('MeanTemp', color='r')
+            ax1.tick_params('y', colors='r')
+            ax2 = ax1.twinx()
+            ax2.plot(data_df.index.values, data_df['Persons'], color='b', marker='.', label='Persons')
+            ax2.set_ylabel('Persons', color='b')
+            ax2.tick_params('y', colors='b')
+            fig.tight_layout()
+            plt.show()
         else:
-            pass
+            data_df.plot(x='DateTime', y='MeanTemp',y2='Persons', figsize=(20, 10), title='Temperature')
+     
             #data_df.plot(x='DateTime', y=['S1Temp','S2Temp','S3Temp'], figsize=(20, 10), title='Temperature')
         #data_df.plot(x='DateTime', y='S2Temp', figsize=(20, 10), label='Temperature from sensor 2', color='blue')
         #data_df.plot(x='DateTime', y='S3Temp', figsize=(20, 10), label='Temperature from sensor 3', color='green')
         #data_df.legend()
         #data_df.show()
     if CO2:
-        data_df.plot(x='DateTime', y='CO2', figsize=(20, 10), title='CO2 Sensor', color='red')
+        # plot CO2 and Persons with 2 y axis and DateTime as x axis and a horizontal line when persons = 2
+        fig, ax1 = plt.subplots(figsize=(20, 10))
+        ax1.plot(data_df.index.values, data_df['CO2'], color='r', marker='.', label='CO2')
+        ax1.set_xlabel('DateTime')
+        ax1.set_ylabel('CO2', color='r')
+        ax1.tick_params('y', colors='r')
+        ax2 = ax1.twinx()
+        ax2.plot(data_df.index.values, data_df['Persons'], color='b', marker='.', label='Persons')
+        ax2.set_ylabel('Persons', color='b')
+        ax2.tick_params('y', colors='b')
+        fig.tight_layout()
+        plt.show()
+
+
+
+   
+
+        #data_df.plot(x='DateTime', y=['CO2','Persons'], figsize=(20, 10), title='CO2 Sensor', color='red')
     if PIR:
         data_df.plot(x='DateTime', y=['PIR1','PIR2'], figsize=(20, 10), title='PIR Sensor')
         #data_df.plot(x='DateTime', y='PIR2', figsize=(20, 10), title='IR motion from sensor 2', color='blue')
     if PIR_Join:
-        data_df.plot(x='DateTime', y='PIR', figsize=(20, 10), title='PIR Sensor', color='red')
+        # plot PIR and Persons with 2 y axis and DateTime as x axis and a horizontal line when persons = 2
+        fig, ax1 = plt.subplots(figsize=(20, 10))
+        ax1.plot(data_df.index.values, data_df['PIR'], color='g', marker='.', label='PIR')
+        ax1.set_xlabel('DateTime')
+        ax1.set_ylabel('PIR', color='r')
+        ax1.tick_params('y', colors='r')
+        ax2 = ax1.twinx()
+        ax2.plot(data_df.index.values, data_df['Persons'], color='b', marker='.', label='Persons')
+        ax2.set_ylabel('Persons', color='b')
+        ax2.tick_params('y', colors='b')
+        fig.tight_layout()
+        plt.show()
+
+        #data_df.plot(x='DateTime', y=['PIR','Persons'], figsize=(20, 10), title='PIR Sensor', color='red')
     if light:
         if MeanLight:
-            data_df.plot(x='DateTime', y=['MeanLight'], figsize=(20, 10), title='Light')
+            # plot MeanLigth and Persons with 2 y axis and DateTime as x axis and a horizontal line when persons = 2
+            fig, ax1 = plt.subplots(figsize=(20, 10))
+            ax1.plot(data_df.index.values, data_df['MeanLight'], color='g', marker='.', label='MeanLight')
+            ax1.set_xlabel('DateTime')
+            ax1.set_ylabel('MeanLight', color='r')
+            ax1.tick_params('y', colors='r')
+            ax2 = ax1.twinx()
+            ax2.plot(data_df.index.values, data_df['Persons'], color='b', marker='.', label='Persons')
+            ax2.set_ylabel('Persons', color='b')
+            ax2.tick_params('y', colors='b')
+            fig.tight_layout()
+            plt.show()
+            #data_df.plot(x='DateTime', y=['MeanLight','Persons'], figsize=(20, 10), title='Light')
         else:
             pass
             #data_df.plot(x='DateTime', y=['S1Light','S2Light','S3Light'], figsize=(20, 10), title='Light')
