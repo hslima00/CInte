@@ -32,13 +32,13 @@ def plot_data(data_df, temperature=False, CO2=False, PIR=False, light=False, PIR
             fig.tight_layout()
             plt.show()
         else:
-            data_df.plot(x='DateTime', y='MeanTemp',y2='Persons', figsize=(20, 10), title='Temperature')
+            #data_df.plot(x='DateTime', y='MeanTemp', figsize=(20, 10), title='Temperature')
      
-            #data_df.plot(x='DateTime', y=['S1Temp','S2Temp','S3Temp'], figsize=(20, 10), title='Temperature')
-        #data_df.plot(x='DateTime', y='S2Temp', figsize=(20, 10), label='Temperature from sensor 2', color='blue')
-        #data_df.plot(x='DateTime', y='S3Temp', figsize=(20, 10), label='Temperature from sensor 3', color='green')
-        #data_df.legend()
-        #data_df.show()
+            data_df.plot(x='DateTime', y=['S1Temp','S2Temp','S3Temp'], figsize=(20, 10), title='Temperature')
+            #data_df.plot(x='DateTime', y='S2Temp', figsize=(20, 10), label='Temperature from sensor 2', color='blue')
+            #data_df.plot(x='DateTime', y='S3Temp', figsize=(20, 10), label='Temperature from sensor 3', color='green')
+            #data_df.legend()
+            
     if CO2:
         # plot CO2 and Persons with 2 y axis and DateTime as x axis and a horizontal line when persons = 2
         fig, ax1 = plt.subplots(figsize=(20, 10))
