@@ -2,7 +2,7 @@
 """
 Created on Sat Oct 15 14:41:02 2022
 
-@author: Resende
+@author: Resende & Lima
 """
 
 #this function takes an input the name of a file and remove outliers, interpolates the missing, 
