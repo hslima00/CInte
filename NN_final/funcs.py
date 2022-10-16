@@ -183,7 +183,7 @@ def normalize_test_set(data_df, min_array, max_array):
         i=i+1    
     return data_df
 
-def normalize_train_set(data_df):
+def normalize_train_set(data_df, return_min_max=True):
     """
     Normalize the data from the dataframe
     :param data_df: dataframe
@@ -192,13 +192,15 @@ def normalize_train_set(data_df):
     min_array = []
     max_array = []
     for collumn in data_df.columns:
-        if (collumn != "DateTime") and (collumn != "Persons"):
+        if (collumn != "DateTime"):
             min = data_df[collumn].min()
             max = data_df[collumn].max()
             min_array.append(min)
             max_array.append(max)
             data_df[collumn] = (data_df[collumn] - min) / (max - min)
-    return data_df, min_array, max_array
-    
+    if return_min_max:
+        return data_df, min_array, max_array
+    else:
+        return data_df
 
 
