@@ -8,6 +8,9 @@ def evaluatecostvariable(individual, CustDist, CustOrd_list):
     total_distance = 0 
     load = 1000 
     
+    for i in range(len(individual)):
+        individual[i] = individual[i] + 1
+    
     #falta ele ir ter de descarregar na última cena (corrigir)
     for i in range(len(individual)):
         #doesnt have enough load 
@@ -41,6 +44,9 @@ def evaluatecostvariable(individual, CustDist, CustOrd_list):
             total_distance = total_distance + CustDist[individual[i]][individual[i-1]]
             load = load - CustOrd_list[individual[i]][0]
             
+        for i in range(len(individual)):
+            individual[i] = individual[i] - 1
+            
     return total_distance,
 
 
@@ -48,6 +54,9 @@ def evaluatecostfixed(individual, CustDist, CustOrd_list):
     total_distance = 0 
     load = 1000 
     
+    for i in range(len(individual)):
+        individual[i] = individual[i] + 1
+        
     #falta ele ir ter de descarregar na última cena (corrigir)
     for i in range(len(individual)):
         #doesnt have enough load 
@@ -81,5 +90,8 @@ def evaluatecostfixed(individual, CustDist, CustOrd_list):
             total_distance = total_distance + CustDist[individual[i]][individual[i-1]]
             load = load - 50
             
-    return total_distance,
+        for i in range(len(individual)):
+            individual[i] = individual[i] - 1
+            
+    return total_distance, 
 
