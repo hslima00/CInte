@@ -3,16 +3,17 @@ Created on Fri Oct 28 11:25:48 2022
 
 @author: Resende
 """
-
 def evaluatecostvariable(individual, CustDist, CustOrd_list):
     total_distance = 0 
     load = 1000 
     
-    for i in range(len(individual)):
+    
+    for i in range(0, len(individual)):
         individual[i] = individual[i] + 1
     
+    
     #falta ele ir ter de descarregar na última cena (corrigir)
-    for i in range(len(individual)):
+    for i in range(0, len(individual)):
         #doesnt have enough load 
         if(load < CustOrd_list[individual[i]][0]):
             #last location -> central
@@ -44,8 +45,8 @@ def evaluatecostvariable(individual, CustDist, CustOrd_list):
             total_distance = total_distance + CustDist[individual[i]][individual[i-1]]
             load = load - CustOrd_list[individual[i]][0]
             
-        for i in range(len(individual)):
-            individual[i] = individual[i] - 1
+    for i in range(0, len(individual)):
+        individual[i] = individual[i] - 1
             
     return total_distance,
 
@@ -54,11 +55,11 @@ def evaluatecostfixed(individual, CustDist, CustOrd_list):
     total_distance = 0 
     load = 1000 
     
-    for i in range(len(individual)):
+    for i in range(0, len(individual)):
         individual[i] = individual[i] + 1
         
     #falta ele ir ter de descarregar na última cena (corrigir)
-    for i in range(len(individual)):
+    for i in range(0, len(individual)):
         #doesnt have enough load 
         if(load < 50):
             #last location -> central
@@ -90,8 +91,8 @@ def evaluatecostfixed(individual, CustDist, CustOrd_list):
             total_distance = total_distance + CustDist[individual[i]][individual[i-1]]
             load = load - 50
             
-        for i in range(len(individual)):
-            individual[i] = individual[i] - 1
+    for i in range(0 ,len(individual)):
+        individual[i] = individual[i] - 1
             
     return total_distance, 
 
