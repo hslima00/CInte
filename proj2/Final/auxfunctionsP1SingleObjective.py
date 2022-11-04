@@ -96,3 +96,60 @@ def evaluatecostfixed(individual, CustDist, CustOrd_list):
             
     return total_distance, 
 
+
+
+#get the route with the goings to the warehouse 
+def get_route(indiv, Orders, Number_Customers):
+    
+    route = [0]
+    cargo = 1000
+    
+    for i in range(Number_Customers):
+        indiv[i] = indiv[i]
+        if cargo > Orders[indiv[i]][0]:
+            route.append(indiv[i])
+            cargo = cargo - Orders[indiv[i]][0]
+        else:
+            route.append(0)
+            route.append(indiv[i])
+            cargo = 1000
+    
+    route.append(0)
+    
+    return route 
+
+import matplotlib.pyplot as plt
+
+def plot_best_route_on_grid(best_ind_plot, CustPos_list): # receives the best individual and plots it on the grid
+# plot the best route on the grid
+    final_sol = best_ind_plot
+    
+    plt.figure(figsize=(10,10)) 
+
+    plt.scatter([x[0] for x in CustPos_list], 
+                [x[1] for x in CustPos_list], 
+                s=50, c='g') # adds a green dot at costumers locations
+    # add number to each costumer
+    for i in range(50):
+        plt.text(CustPos_list[i][0], CustPos_list[i][1], str(i), fontsize=15)
+    
+    plt.scatter(CustPos_list[0][0], CustPos_list[0][1], s=10, c='r')
+    plt.scatter(CustPos_list[0][0], CustPos_list[0][1], s=10, c='w')
+    plt.text(CustPos_list[0][0], CustPos_list[0][1], 'WH', fontsize=10)
+    plt.grid()
+    for p in range(len(final_sol) - 1):
+        i = final_sol[p]
+        j = final_sol[p+1]
+        # if next customer is the warehouse change color to red
+        if j == 0:
+            color = 'red'
+        else:
+            color = 'black'       
+        plt.arrow(CustPos_list[i][0], 
+                CustPos_list[i][1],
+                CustPos_list[j][0] - CustPos_list[i][0], 
+                CustPos_list[j][1] - CustPos_list[i][1], 
+                color=color)
+    plt.show()
+
+
