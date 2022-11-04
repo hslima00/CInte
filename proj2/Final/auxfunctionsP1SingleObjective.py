@@ -1,7 +1,7 @@
 """
 Created on Fri Oct 28 11:25:48 2022
 
-@author: Resende
+@author: Resende, Lima
 """
 def evaluatecostvariable(individual, CustDist, CustOrd_list):
     total_distance = 0 
@@ -103,16 +103,31 @@ def get_route(indiv, Orders, Number_Customers):
     
     route = [0]
     cargo = 1000
-    
-    for i in range(Number_Customers):
-        indiv[i] = indiv[i]
-        if cargo > Orders[indiv[i]][0]:
-            route.append(indiv[i])
-            cargo = cargo - Orders[indiv[i]][0]
-        else:
-            route.append(0)
-            route.append(indiv[i])
-            cargo = 1000
+
+    try:
+        for i in range(Number_Customers):
+            indiv[i] = indiv[i]
+            if cargo > Orders[indiv[i]][0]:
+                route.append(indiv[i])
+                cargo = cargo - Orders[indiv[i]][0]
+            else:
+                route.append(0)
+                route.append(indiv[i])
+                cargo = 1000  
+    except:
+            Orders = 50
+            for i in range(Number_Customers):
+                indiv[i] = indiv[i]
+
+                if cargo > Orders:
+                    route.append(indiv[i])
+                    cargo = cargo - Orders
+                else:
+                    route.append(0)
+                    route.append(indiv[i])
+                    cargo = 1000
+
+
     
     route.append(0)
     
@@ -120,17 +135,21 @@ def get_route(indiv, Orders, Number_Customers):
 
 import matplotlib.pyplot as plt
 
-def plot_best_route_on_grid(best_ind_plot, CustPos_list): # receives the best individual and plots it on the grid
+def plot_best_route_on_grid(best_ind_plot, CustPos_list, dist, nr_customers): # receives the best individual and plots it on the grid
 # plot the best route on the grid
     final_sol = best_ind_plot
     
     plt.figure(figsize=(10,10)) 
 
-    plt.scatter([x[0] for x in CustPos_list], 
-                [x[1] for x in CustPos_list], 
-                s=50, c='g') # adds a green dot at costumers locations
+    # scatter plot of the customers and the warehouse until nr_customers+1
+    plt.scatter([CustPos_list[i][0] for i in range(nr_customers+1)], 
+                [CustPos_list[i][1] for i in range(nr_customers+1)], 
+                color='g', s=50, marker='o', label='Customers')
+    # plt.scatter([x[0] for x in CustPos_list until nr_customers], 
+    #             [x[1] for x in CustPos_list until nr_customers], 
+    #             s=50, c='g') # adds a green dot at costumers locations
     # add number to each costumer
-    for i in range(50):
+    for i in range(nr_customers+1):
         plt.text(CustPos_list[i][0], CustPos_list[i][1], str(i), fontsize=15)
     
     plt.scatter(CustPos_list[0][0], CustPos_list[0][1], s=10, c='r')
@@ -150,6 +169,23 @@ def plot_best_route_on_grid(best_ind_plot, CustPos_list): # receives the best in
                 CustPos_list[j][0] - CustPos_list[i][0], 
                 CustPos_list[j][1] - CustPos_list[i][1], 
                 color=color)
+    plt.title('Best route, distance: ' + str(dist)+ 'km')
     plt.show()
+
+# inverse mutation for TSP
+def invmutTSP(individual):
+    import random
+    # Choose two cities along the list at random and invert the segment between those cities.
+
+    # Choose two cities along the list at random
+    city1 = random.randint(0, len(individual) - 1)
+    city2 = random.randint(0, len(individual) - 1)
+
+    # Invert the segment between those cities
+    if city1 < city2:
+        individual[city1:city2] = individual[city1:city2][::-1]
+    elif city1 > city2:
+        individual[city2:city1] = individual[city2:city1][::-1]
+    return individual,
 
 
