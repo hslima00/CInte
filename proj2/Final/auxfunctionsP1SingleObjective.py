@@ -189,3 +189,51 @@ def invmutTSP(individual):
     return individual,
 
 
+def convergence_plot(c_10_1, c_10_2, c_10_3, c_10_4, c_30_1, c_30_2, c_30_3, c_30_4, c_50_1, c_50_2, c_50_3, c_50_4):
+    import numpy as np
+    # generate 3 graphs
+    # one graph per number of customers
+
+    # superimpose the graphs
+    # one graph per number of customers
+
+    # generate x axis 
+    x = np.arange(0, 100, 1)
+    # subplots for each number of customers
+    fig, (c_10, c_30, c_50) = plt.subplots(1, 3, figsize=(15, 5))
+
+    # plot the graphs
+    c_10.plot(x, c_10_1, label='Central, Variable Orders')
+    c_10.plot(x, c_10_2, label='Central, Fixed Orders')
+    c_10.plot(x, c_10_3, label='Corner, Variable Orders')
+    c_10.plot(x, c_10_4, label='Corner, Fixed Orders')
+    c_10.set_title('10 customers')
+    c_10.set_xlabel('Generation')
+    c_10.set_ylabel('Distance')
+    c_10.legend()
+
+    c_30.plot(x, c_30_1, label='Central, Variable Orders')
+    c_30.plot(x, c_30_2, label='Central, Fixed Orders')
+    c_30.plot(x, c_30_3, label='Corner, Variable Orders')
+    c_30.plot(x, c_30_4, label='Corner, Fixed Orders')
+    c_30.set_title('30 customers')
+    c_30.set_xlabel('Generation')
+    c_30.set_ylabel('Distance')
+    c_30.legend()
+
+    c_50.plot(x, c_50_1, label='Central, Variable Orders')
+    c_50.plot(x, c_50_2, label='Central, Fixed Orders')
+    c_50.plot(x, c_50_3, label='Corner, Variable Orders')
+    c_50.plot(x, c_50_4, label='Corner, Fixed Orders')
+    c_50.set_title('50 customers')
+    c_50.set_xlabel('Generation')
+    c_50.set_ylabel('Distance')
+    c_50.legend()
+
+    plt.show()
+    
+
+
+
+
+

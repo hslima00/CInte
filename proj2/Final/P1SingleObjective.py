@@ -28,10 +28,12 @@ del CustPos_WHCorner["Customer XY"]
 CustPos_WHCorner_list = CustPos_WHCorner.values.tolist()
 
 # load a configuration file with the parameters of the problem
+
 exec(open("configsP1.py").read())
 
 def P1():
-
+    
+    
     #selects the file to be used with the costs 
     if(Warehouse_location == "Central"):
         CustDist = CustDist_WHCentral_list
@@ -50,13 +52,16 @@ def P1():
     #results is a list of (best_ind, mean, std, min)
     results = []
     
-    #iterate over a previous defined number of iterations 
+    #iterate over a previous defined number of iterations     
+
+
     for i in range(n_iterations):
         seed = random.randint(1, 100000) 
         results.append(EASingleObjective(Number_Customers, Population_Size, 
-                                         Number_of_Evaluations, seed, CustDist, CustOrd, i+1))
+                                            Number_of_Evaluations, seed, CustDist, CustOrd, i+1))
+    
 
-        
+    
     #ajusts the final result
     for i in range(n_iterations):
         for j in range(Number_Customers):
@@ -87,6 +92,7 @@ def P1():
     print("  Avg Std %s" % avg_std)
     print("  Best individual is %s, %s" % (results[min_index][0], results[min_index][3]))
 
+    #print("distance per generation:",len(results[min_index][4]))
 
     #gets the route and gives the visual representation 
     final_route = get_route(results[min_index][0] ,CustOrd, Number_Customers)
@@ -96,6 +102,8 @@ def P1():
 
 def EASingleObjective(Number_Customers, Population_Size, Number_of_Evaluations, seed, CustDist, CustOrd_list, iteration):
     
+    distance_per_generation = []
+
     creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
     creator.create("Individual", list, fitness=creator.FitnessMin)
 
@@ -106,7 +114,7 @@ def EASingleObjective(Number_Customers, Population_Size, Number_of_Evaluations, 
                      random.sample, \
                      range(Number_Customers), 
                      Number_Customers)
-
+    
     toolbox.register("individual", \
                      tools.initIterate, \
                      creator.Individual, toolbox.indices)
@@ -133,6 +141,8 @@ def EASingleObjective(Number_Customers, Population_Size, Number_of_Evaluations, 
     # create an initial population of n individuals (where
     # each individual is a list of indexes)
     pop = toolbox.population(n=Population_Size)
+
+#    print(pop[0])
     
     if(heuristic == 1):
         heuristic_ind = creator.Individual(generate_heuristic())
@@ -225,24 +235,28 @@ def EASingleObjective(Number_Customers, Population_Size, Number_of_Evaluations, 
 
         arr_mean.append(mean)
         arr_min.append(min(fits))
+
+        # append best distance of generation to list
+        distance_per_generation.append(min(fits))
+        
     
     print("-- End of (successful) evolution --")
     
     best_ind = tools.selBest(pop, 1)[0]
-    
+ #   print(best_ind.fitness.values)
     if(verbose == 1):
         print("Best individual is %s, %s" % (best_ind, best_ind.fitness.values))
         
         x_coordinate = [i+1 for i in range(len(arr_mean))]
         plt.plot(x_coordinate, arr_mean, label = "Average")
         plt.plot(x_coordinate, arr_min, label = "Min")
-        plt.title("Min and Average Fitness over generations of iteration %s" % iteration)
+        plt.title("Min and Average Fitness over generations of iteration")
         plt.legend()
         plt.grid()
         plt.figure()
         
 
-    return (best_ind, mean, std, min(fits))
+    return (best_ind, mean, std, min(fits), distance_per_generation)
 
 
 #generates the heuristic element
